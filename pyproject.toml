@@ -37,7 +37,7 @@ select = ["E", "F", "I", "B", "UP", "S", "ASYNC", "SIM"]
 ignore = ["S101"]
 
 [tool.ruff.lint.per-file-ignores]
-"**/tests/**" = ["S"]
+"**/tests/**" = ["S", "E501"]
 
 [tool.mypy]
 python_version = "3.12"
@@ -53,5 +53,5 @@ testpaths = ["services"]
 markers = ["integration: needs Postgres/Redis from docker compose", "smoke: needs real API keys (RUN_SMOKE=1)"]
 
 [[tool.mypy.overrides]]
-module = ["pgvector.*", "arq.*", "trafilatura.*", "lxml.*", "alembic.*"]
+module = ["pgvector.*", "arq.*", "trafilatura.*", "lxml.*", "alembic.*", "playwright.*"]
 ignore_missing_imports = true

@@ -9,6 +9,9 @@ dependencies = [
   "lxml>=5.3",
 ]
 
+[project.optional-dependencies]
+render = ["playwright>=1.48"]
+
 [build-system]
 requires = ["hatchling"]
 build-backend = "hatchling.build"
