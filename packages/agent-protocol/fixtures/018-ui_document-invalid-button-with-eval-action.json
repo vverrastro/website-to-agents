@@ -1,0 +1,16 @@
+{
+  "schema": "ui_document",
+  "valid": false,
+  "description": "button with eval action",
+  "payload": {
+    "version": "1",
+    "root": {
+      "type": "button",
+      "label": "x",
+      "action": {
+        "type": "eval",
+        "code": "1"
+      }
+    }
+  }
+}

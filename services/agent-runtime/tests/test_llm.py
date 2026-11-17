@@ -231,3 +231,24 @@ async def test_fake_provider_records_requests_and_structured_output() -> None:
     fake = FakeLLMProvider(lambda r: {"answer": "a", "source_ids": [1]})
     out = await fake.generate_response(REQ)
     assert out.structured == {"answer": "a", "source_ids": [1]} and fake.requests == [REQ]
+
+
+async def test_dev_fake_provider_answers_extractively_and_cites() -> None:
+    p = build_llm_provider(settings(llm_provider="fake"))
+    prompt = (
+        '<sources>\n<source id="1" title="Acme &amp; Co pricing" section="Pricing">\n'
+        "The Pro plan costs 20 euros &lt;per&gt; month.\n</source>\n</sources>\n\nVisitor question:\nprice?"
+    )
+    out = await p.generate_response(
+        GenerateRequest("s", [Message("user", prompt)], json_schema=SCHEMA)
+    )
+    assert out.structured is not None
+    assert (
+        out.structured["used_source_ids"] == [1]
+        and "20 euros <per> month" in out.structured["answer"]
+    )
+    assert out.structured["navigation"] == [{"source_id": 1, "label": "Acme & Co pricing"}]
+    empty = await p.generate_response(
+        GenerateRequest("s", [Message("user", "no sources")], json_schema=SCHEMA)
+    )
+    assert empty.structured and empty.structured["answerable"] is False

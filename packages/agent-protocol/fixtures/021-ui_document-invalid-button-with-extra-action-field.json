@@ -1,0 +1,17 @@
+{
+  "schema": "ui_document",
+  "valid": false,
+  "description": "button with extra action field",
+  "payload": {
+    "version": "1",
+    "root": {
+      "type": "button",
+      "label": "x",
+      "action": {
+        "type": "send_message",
+        "text": "t",
+        "headers": {}
+      }
+    }
+  }
+}

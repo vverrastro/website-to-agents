@@ -1,0 +1,9 @@
+{
+  "schema": "chat_request",
+  "valid": true,
+  "description": "null conversation id",
+  "payload": {
+    "message": "hello",
+    "conversation_id": null
+  }
+}

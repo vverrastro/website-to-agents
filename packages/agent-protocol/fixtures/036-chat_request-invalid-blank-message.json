@@ -1,0 +1,8 @@
+{
+  "schema": "chat_request",
+  "valid": false,
+  "description": "blank message",
+  "payload": {
+    "message": "   "
+  }
+}

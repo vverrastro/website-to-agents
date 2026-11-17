@@ -1,0 +1,57 @@
+{
+  "schema": "ui_document",
+  "valid": false,
+  "description": "list with 11 items",
+  "payload": {
+    "version": "1",
+    "root": {
+      "type": "list",
+      "items": [
+        {
+          "type": "text",
+          "text": "t"
+        },
+        {
+          "type": "text",
+          "text": "t"
+        },
+        {
+          "type": "text",
+          "text": "t"
+        },
+        {
+          "type": "text",
+          "text": "t"
+        },
+        {
+          "type": "text",
+          "text": "t"
+        },
+        {
+          "type": "text",
+          "text": "t"
+        },
+        {
+          "type": "text",
+          "text": "t"
+        },
+        {
+          "type": "text",
+          "text": "t"
+        },
+        {
+          "type": "text",
+          "text": "t"
+        },
+        {
+          "type": "text",
+          "text": "t"
+        },
+        {
+          "type": "text",
+          "text": "t"
+        }
+      ]
+    }
+  }
+}

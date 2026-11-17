@@ -1,0 +1,8 @@
+{
+  "schema": "chat_request",
+  "valid": false,
+  "description": "message wrong type",
+  "payload": {
+    "message": 5
+  }
+}

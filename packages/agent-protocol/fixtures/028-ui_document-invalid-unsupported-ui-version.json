@@ -1,0 +1,12 @@
+{
+  "schema": "ui_document",
+  "valid": false,
+  "description": "unsupported ui version",
+  "payload": {
+    "version": "2",
+    "root": {
+      "type": "text",
+      "text": "x"
+    }
+  }
+}

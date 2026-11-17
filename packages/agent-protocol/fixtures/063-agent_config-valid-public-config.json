@@ -1,0 +1,9 @@
+{
+  "schema": "agent_config",
+  "valid": true,
+  "description": "public config",
+  "payload": {
+    "protocol_version": "1",
+    "name": "Acme"
+  }
+}

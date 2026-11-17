@@ -1,0 +1,38 @@
+{
+  "schema": "ui_document",
+  "valid": true,
+  "description": "card with list of links and buttons",
+  "payload": {
+    "version": "1",
+    "root": {
+      "type": "card",
+      "title": "Related",
+      "children": [
+        {
+          "type": "list",
+          "ordered": false,
+          "items": [
+            {
+              "type": "link",
+              "label": "Pricing",
+              "url": "https://acme.test/pricing"
+            }
+          ]
+        },
+        {
+          "type": "list",
+          "items": [
+            {
+              "type": "button",
+              "label": "More",
+              "action": {
+                "type": "send_message",
+                "text": "tell me more"
+              }
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,11 @@
+{
+  "schema": "error_response",
+  "valid": true,
+  "description": "error without request id",
+  "payload": {
+    "error": {
+      "code": "x",
+      "message": "m"
+    }
+  }
+}

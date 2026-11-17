@@ -1,0 +1,27 @@
+{
+  "schema": "ui_document",
+  "valid": true,
+  "description": "maximum allowed depth (4)",
+  "payload": {
+    "version": "1",
+    "root": {
+      "type": "card",
+      "children": [
+        {
+          "type": "card",
+          "children": [
+            {
+              "type": "card",
+              "children": [
+                {
+                  "type": "text",
+                  "text": "leaf"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

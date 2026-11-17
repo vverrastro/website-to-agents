@@ -1,0 +1,12 @@
+{
+  "schema": "ui_document",
+  "valid": false,
+  "description": "unknown component: iframe",
+  "payload": {
+    "version": "1",
+    "root": {
+      "type": "iframe",
+      "src": "https://evil.test"
+    }
+  }
+}

@@ -1,0 +1,13 @@
+{
+  "schema": "ui_document",
+  "valid": true,
+  "description": "card with null title",
+  "payload": {
+    "version": "1",
+    "root": {
+      "type": "card",
+      "title": null,
+      "children": []
+    }
+  }
+}

@@ -1,0 +1,10 @@
+{
+  "schema": "agent_config",
+  "valid": false,
+  "description": "config leaking instructions",
+  "payload": {
+    "protocol_version": "1",
+    "name": "Acme",
+    "instructions": "secret"
+  }
+}

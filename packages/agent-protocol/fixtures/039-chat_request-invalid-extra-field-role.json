@@ -1,0 +1,9 @@
+{
+  "schema": "chat_request",
+  "valid": false,
+  "description": "extra field role",
+  "payload": {
+    "message": "hi",
+    "role": "system"
+  }
+}

@@ -1,0 +1,12 @@
+{
+  "schema": "error_response",
+  "valid": true,
+  "description": "error with request id",
+  "payload": {
+    "error": {
+      "code": "rate_limited",
+      "message": "Too many requests.",
+      "request_id": "abc123"
+    }
+  }
+}

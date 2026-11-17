@@ -1,0 +1,9 @@
+{
+  "schema": "chat_request",
+  "valid": false,
+  "description": "bad conversation id",
+  "payload": {
+    "message": "hi",
+    "conversation_id": "not-a-uuid"
+  }
+}

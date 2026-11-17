@@ -1,0 +1,8 @@
+{
+  "schema": "error_response",
+  "valid": false,
+  "description": "missing error",
+  "payload": {
+    "code": "x"
+  }
+}

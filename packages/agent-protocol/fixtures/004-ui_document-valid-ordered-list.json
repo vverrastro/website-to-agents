@@ -1,0 +1,22 @@
+{
+  "schema": "ui_document",
+  "valid": true,
+  "description": "ordered list",
+  "payload": {
+    "version": "1",
+    "root": {
+      "type": "list",
+      "ordered": true,
+      "items": [
+        {
+          "type": "text",
+          "text": "a"
+        },
+        {
+          "type": "text",
+          "text": "b"
+        }
+      ]
+    }
+  }
+}

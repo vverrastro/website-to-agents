@@ -14,7 +14,7 @@ from fastapi import APIRouter, Request, Response
 from pydantic import ValidationError
 from sqlalchemy import select
 from wta_common.models import Agent
-from wta_common.protocol import AgentPublicConfig, ChatRequest, ChatResponse
+from wta_common.protocol import PROTOCOL_VERSION, AgentPublicConfig, ChatRequest, ChatResponse
 from wta_common.settings import Settings
 
 from wta_api.chat_service import handle_chat
@@ -113,7 +113,7 @@ async def public_config(request: Request, response: Response, public_id: str) ->
     check_origin(request, agent)
     if origin := request.headers.get("origin"):
         response.headers.update(cors_headers(origin))
-    return AgentPublicConfig(name=agent.name)
+    return AgentPublicConfig(protocol_version=PROTOCOL_VERSION, name=agent.name)
 
 
 @router.post("/chat", response_model=ChatResponse)

@@ -1,0 +1,17 @@
+{
+  "schema": "ui_document",
+  "valid": false,
+  "description": "nested unknown component",
+  "payload": {
+    "version": "1",
+    "root": {
+      "type": "card",
+      "children": [
+        {
+          "type": "script",
+          "src": "x"
+        }
+      ]
+    }
+  }
+}

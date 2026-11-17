@@ -1,9 +1,9 @@
-.PHONY: install up down migrate api worker reindex test lint format typecheck check
+.PHONY: install up down migrate api worker reindex dashboard widget test lint format typecheck check build
 export PATH := $(HOME)/.local/bin:$(PATH)
 
 install:
 	uv sync --all-packages
-	@if [ -f package.json ]; then npm install; fi
+	npm install
 
 up:
 	docker compose up -d --wait
@@ -23,18 +23,31 @@ worker:
 reindex:
 	uv run python -m wta_indexing.reindex
 
+dashboard:
+	npm run dev -w @wta/dashboard
+
+widget:
+	npm run dev -w @wta/widget
+
+build:
+	npm run build
+
 test:
 	uv run pytest
+	npm test
 
 lint:
 	uv run ruff check .
 	uv run ruff format --check .
+	npm run lint
 
 format:
 	uv run ruff check --fix .
 	uv run ruff format .
+	npm run format
 
 typecheck:
 	uv run mypy services/common/src services/crawler/src services/indexing/src services/agent-runtime/src services/api/src
+	npm run typecheck
 
 check: lint typecheck test

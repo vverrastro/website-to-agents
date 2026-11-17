@@ -1,0 +1,13 @@
+{
+  "schema": "ui_document",
+  "valid": false,
+  "description": "extra top-level field",
+  "payload": {
+    "version": "1",
+    "root": {
+      "type": "text",
+      "text": "x"
+    },
+    "script": "alert(1)"
+  }
+}

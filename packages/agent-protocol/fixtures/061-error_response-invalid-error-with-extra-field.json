@@ -1,0 +1,12 @@
+{
+  "schema": "error_response",
+  "valid": false,
+  "description": "error with extra field",
+  "payload": {
+    "error": {
+      "code": "x",
+      "message": "m",
+      "stack": "Traceback..."
+    }
+  }
+}

@@ -1,0 +1,8 @@
+{
+  "schema": "chat_request",
+  "valid": true,
+  "description": "plain message",
+  "payload": {
+    "message": "hello"
+  }
+}

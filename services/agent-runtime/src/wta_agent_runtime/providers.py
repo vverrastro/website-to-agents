@@ -2,9 +2,18 @@
 
 from __future__ import annotations
 
+import html
+import re
+from typing import Any
+
 from wta_common.settings import ConfigError, Settings
 
-from wta_agent_runtime.llm import FakeLLMProvider, LLMProvider, register_llm_provider
+from wta_agent_runtime.llm import (
+    FakeLLMProvider,
+    GenerateRequest,
+    LLMProvider,
+    register_llm_provider,
+)
 
 
 def _anthropic(settings: Settings) -> LLMProvider:
@@ -25,11 +34,30 @@ def _anthropic(settings: Settings) -> LLMProvider:
     )
 
 
+_SOURCE = re.compile(r'<source id="1" title="([^"]*)"[^>]*>\n(.*?)\n</source>', re.DOTALL)
+
+
+def _extractive_answer(request: GenerateRequest) -> dict[str, Any]:
+    """Key-less dev responder: quotes the best retrieved source and cites it. Not an LLM."""
+    match = _SOURCE.search(request.messages[-1].content)
+    if match is None:
+        return {"answerable": False, "answer": "No sources were provided.", "used_source_ids": [],
+                "follow_ups": [], "navigation": []}  # fmt: skip
+    title, text = html.unescape(match.group(1)), html.unescape(match.group(2))
+    snippet = " ".join(text.split())[:400]
+    return {
+        "answerable": True,
+        "answer": f"(dev answer, no LLM configured) From “{title}”: {snippet}",
+        "used_source_ids": [1],
+        "follow_ups": [],
+        "navigation": [{"source_id": 1, "label": title}],
+    }
+
+
 def _fake(settings: Settings) -> LLMProvider:
     if settings.is_production:
         raise ConfigError("LLM_PROVIDER=fake is not allowed with APP_ENV=production.")
-    reply = {"answer": "Fake provider (no LLM configured).", "source_ids": []}
-    return FakeLLMProvider(responder=lambda _: reply)
+    return FakeLLMProvider(responder=_extractive_answer)
 
 
 register_llm_provider("anthropic", _anthropic)

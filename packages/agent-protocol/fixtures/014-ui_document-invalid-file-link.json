@@ -1,0 +1,13 @@
+{
+  "schema": "ui_document",
+  "valid": false,
+  "description": "file: link",
+  "payload": {
+    "version": "1",
+    "root": {
+      "type": "link",
+      "label": "x",
+      "url": "file:///etc/passwd"
+    }
+  }
+}

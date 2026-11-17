@@ -152,7 +152,7 @@ class UsageInfo(_Strict):
 
 
 class ChatResponse(_Strict):
-    protocol_version: Literal["1"] = PROTOCOL_VERSION  # type: ignore[assignment]
+    protocol_version: Literal["1"]  # required on the wire; the server sets PROTOCOL_VERSION
     conversation_id: uuid.UUID
     message_id: uuid.UUID
     answer: str = Field(max_length=8000)
@@ -173,5 +173,5 @@ class ErrorResponse(_Strict):
 
 
 class AgentPublicConfig(_Strict):
-    protocol_version: Literal["1"] = PROTOCOL_VERSION  # type: ignore[assignment]
+    protocol_version: Literal["1"]  # required on the wire; the server sets PROTOCOL_VERSION
     name: str

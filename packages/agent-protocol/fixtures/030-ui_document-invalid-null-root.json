@@ -1,0 +1,9 @@
+{
+  "schema": "ui_document",
+  "valid": false,
+  "description": "null root",
+  "payload": {
+    "version": "1",
+    "root": null
+  }
+}

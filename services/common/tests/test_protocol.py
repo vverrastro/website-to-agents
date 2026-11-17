@@ -106,6 +106,7 @@ def test_chat_request_is_strict() -> None:
 
 def test_response_round_trip_and_defaults() -> None:
     resp = ChatResponse(
+        protocol_version="1",
         conversation_id=uuid.uuid4(),
         message_id=uuid.uuid4(),
         answer="ok",

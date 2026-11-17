@@ -70,6 +70,7 @@ async def test_grounded_answer_with_sources_and_server_built_ui(session_factory:
     # The end-to-end response is valid under the public protocol.
     ChatResponse.model_validate(
         {
+            "protocol_version": "1",
             "conversation_id": "00000000-0000-0000-0000-000000000001",
             "message_id": "00000000-0000-0000-0000-000000000002",
             "answer": out.answer,

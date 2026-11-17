@@ -1,0 +1,13 @@
+{
+  "schema": "ui_document",
+  "valid": false,
+  "description": "link with empty label",
+  "payload": {
+    "version": "1",
+    "root": {
+      "type": "link",
+      "label": "",
+      "url": "https://acme.test/"
+    }
+  }
+}

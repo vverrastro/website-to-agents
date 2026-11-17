@@ -1,0 +1,12 @@
+{
+  "schema": "ui_document",
+  "valid": false,
+  "description": "unknown component: html",
+  "payload": {
+    "version": "1",
+    "root": {
+      "type": "html",
+      "html": "<img src=x onerror=alert(1)>"
+    }
+  }
+}

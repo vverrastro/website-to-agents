@@ -1,0 +1,6 @@
+{
+  "schema": "chat_request",
+  "valid": false,
+  "description": "missing message",
+  "payload": {}
+}

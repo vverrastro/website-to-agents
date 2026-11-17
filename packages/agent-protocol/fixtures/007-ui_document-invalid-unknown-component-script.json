@@ -1,0 +1,12 @@
+{
+  "schema": "ui_document",
+  "valid": false,
+  "description": "unknown component: script",
+  "payload": {
+    "version": "1",
+    "root": {
+      "type": "script",
+      "src": "https://evil.test/x.js"
+    }
+  }
+}

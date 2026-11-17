@@ -13,7 +13,7 @@ from wta_agent_runtime.llm import LLMError, Message
 from wta_agent_runtime.rag import AgentContext, AgentRuntime
 from wta_common.logging import get_logger
 from wta_common.models import Agent, ChatMessage, Conversation
-from wta_common.protocol import ChatRequest, ChatResponse
+from wta_common.protocol import PROTOCOL_VERSION, ChatRequest, ChatResponse
 from wta_common.settings import ConfigError, Settings
 from wta_indexing.embeddings import EmbeddingError
 from wta_indexing.pipeline import EmbeddingSpaceMismatch
@@ -129,6 +129,7 @@ async def handle_chat(
             .values(last_activity_at=now + timedelta(milliseconds=1))
         )
     return ChatResponse(
+        protocol_version=PROTOCOL_VERSION,
         conversation_id=conv_id,
         message_id=message_id,
         answer=result.answer,

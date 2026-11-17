@@ -1,0 +1,238 @@
+{
+  "schema": "ui_document",
+  "valid": false,
+  "description": "too many nodes (>40)",
+  "payload": {
+    "version": "1",
+    "root": {
+      "type": "card",
+      "children": [
+        {
+          "type": "list",
+          "items": [
+            {
+              "type": "text",
+              "text": "t"
+            },
+            {
+              "type": "text",
+              "text": "t"
+            },
+            {
+              "type": "text",
+              "text": "t"
+            },
+            {
+              "type": "text",
+              "text": "t"
+            },
+            {
+              "type": "text",
+              "text": "t"
+            },
+            {
+              "type": "text",
+              "text": "t"
+            },
+            {
+              "type": "text",
+              "text": "t"
+            },
+            {
+              "type": "text",
+              "text": "t"
+            },
+            {
+              "type": "text",
+              "text": "t"
+            },
+            {
+              "type": "text",
+              "text": "t"
+            }
+          ]
+        },
+        {
+          "type": "list",
+          "items": [
+            {
+              "type": "text",
+              "text": "t"
+            },
+            {
+              "type": "text",
+              "text": "t"
+            },
+            {
+              "type": "text",
+              "text": "t"
+            },
+            {
+              "type": "text",
+              "text": "t"
+            },
+            {
+              "type": "text",
+              "text": "t"
+            },
+            {
+              "type": "text",
+              "text": "t"
+            },
+            {
+              "type": "text",
+              "text": "t"
+            },
+            {
+              "type": "text",
+              "text": "t"
+            },
+            {
+              "type": "text",
+              "text": "t"
+            },
+            {
+              "type": "text",
+              "text": "t"
+            }
+          ]
+        },
+        {
+          "type": "list",
+          "items": [
+            {
+              "type": "text",
+              "text": "t"
+            },
+            {
+              "type": "text",
+              "text": "t"
+            },
+            {
+              "type": "text",
+              "text": "t"
+            },
+            {
+              "type": "text",
+              "text": "t"
+            },
+            {
+              "type": "text",
+              "text": "t"
+            },
+            {
+              "type": "text",
+              "text": "t"
+            },
+            {
+              "type": "text",
+              "text": "t"
+            },
+            {
+              "type": "text",
+              "text": "t"
+            },
+            {
+              "type": "text",
+              "text": "t"
+            },
+            {
+              "type": "text",
+              "text": "t"
+            }
+          ]
+        },
+        {
+          "type": "list",
+          "items": [
+            {
+              "type": "text",
+              "text": "t"
+            },
+            {
+              "type": "text",
+              "text": "t"
+            },
+            {
+              "type": "text",
+              "text": "t"
+            },
+            {
+              "type": "text",
+              "text": "t"
+            },
+            {
+              "type": "text",
+              "text": "t"
+            },
+            {
+              "type": "text",
+              "text": "t"
+            },
+            {
+              "type": "text",
+              "text": "t"
+            },
+            {
+              "type": "text",
+              "text": "t"
+            },
+            {
+              "type": "text",
+              "text": "t"
+            },
+            {
+              "type": "text",
+              "text": "t"
+            }
+          ]
+        },
+        {
+          "type": "list",
+          "items": [
+            {
+              "type": "text",
+              "text": "t"
+            },
+            {
+              "type": "text",
+              "text": "t"
+            },
+            {
+              "type": "text",
+              "text": "t"
+            },
+            {
+              "type": "text",
+              "text": "t"
+            },
+            {
+              "type": "text",
+              "text": "t"
+            },
+            {
+              "type": "text",
+              "text": "t"
+            },
+            {
+              "type": "text",
+              "text": "t"
+            },
+            {
+              "type": "text",
+              "text": "t"
+            },
+            {
+              "type": "text",
+              "text": "t"
+            },
+            {
+              "type": "text",
+              "text": "t"
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,13 @@
+{
+  "schema": "ui_document",
+  "valid": false,
+  "description": "unknown property style",
+  "payload": {
+    "version": "1",
+    "root": {
+      "type": "text",
+      "text": "x",
+      "style": "position:fixed"
+    }
+  }
+}

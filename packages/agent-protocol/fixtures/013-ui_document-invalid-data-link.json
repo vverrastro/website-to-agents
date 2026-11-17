@@ -1,0 +1,13 @@
+{
+  "schema": "ui_document",
+  "valid": false,
+  "description": "data: link",
+  "payload": {
+    "version": "1",
+    "root": {
+      "type": "link",
+      "label": "x",
+      "url": "data:text/html,<script>1</script>"
+    }
+  }
+}

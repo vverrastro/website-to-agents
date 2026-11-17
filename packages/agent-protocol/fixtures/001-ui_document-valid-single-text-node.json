@@ -1,0 +1,12 @@
+{
+  "schema": "ui_document",
+  "valid": true,
+  "description": "single text node",
+  "payload": {
+    "version": "1",
+    "root": {
+      "type": "text",
+      "text": "hello"
+    }
+  }
+}

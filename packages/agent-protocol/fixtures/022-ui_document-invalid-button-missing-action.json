@@ -1,0 +1,12 @@
+{
+  "schema": "ui_document",
+  "valid": false,
+  "description": "button missing action",
+  "payload": {
+    "version": "1",
+    "root": {
+      "type": "button",
+      "label": "x"
+    }
+  }
+}
