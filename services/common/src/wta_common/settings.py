@@ -5,8 +5,11 @@ from __future__ import annotations
 from functools import lru_cache
 from typing import Literal
 
-from pydantic import SecretStr, model_validator
+from pydantic import SecretStr, field_validator, model_validator
 from pydantic_settings import BaseSettings, SettingsConfigDict
+
+# Single source of truth for the default LLM; override with LLM_MODEL.
+DEFAULT_LLM_MODEL = "claude-opus-5-5"
 
 
 class ConfigError(RuntimeError):
@@ -23,7 +26,10 @@ class Settings(BaseSettings):
     redis_url: str = "redis://127.0.0.1:6379/0"
 
     llm_provider: str = "anthropic"
-    llm_model: str = ""
+    llm_model: str = DEFAULT_LLM_MODEL
+    llm_effort: str = ""  # "" = model default; else low|medium|high|xhigh|max
+    llm_refusal_fallback: bool = True  # Anthropic server-side refusal fallback
+    llm_timeout_seconds: float = 60.0
     anthropic_api_key: SecretStr = SecretStr("")
 
     embedding_provider: str = "voyage"
@@ -49,6 +55,11 @@ class Settings(BaseSettings):
     @property
     def admin_cors_origin_list(self) -> list[str]:
         return [o.strip() for o in self.admin_cors_origins.split(",") if o.strip()]
+
+    @field_validator("llm_model", mode="before")
+    @classmethod
+    def _blank_model_means_default(cls, value: object) -> object:
+        return DEFAULT_LLM_MODEL if isinstance(value, str) and not value.strip() else value
 
     @model_validator(mode="after")
     def _fail_closed_in_production(self) -> Settings:
