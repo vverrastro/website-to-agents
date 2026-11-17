@@ -47,6 +47,7 @@ explicit_package_bases = true
 mypy_path = "services/common/src:services/crawler/src:services/indexing/src:services/agent-runtime/src:services/api/src"
 
 [tool.pytest.ini_options]
+addopts = "-p wta_common.testing"
 asyncio_mode = "auto"
 asyncio_default_fixture_loop_scope = "function"
 testpaths = ["services"]

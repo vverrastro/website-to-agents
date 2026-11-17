@@ -6,7 +6,7 @@ from __future__ import annotations
 import asyncio
 import time
 from collections import deque
-from collections.abc import AsyncIterator, Awaitable, Callable, Mapping
+from collections.abc import AsyncIterator, Awaitable, Callable, Iterable, Mapping
 from dataclasses import dataclass, field
 from datetime import datetime
 from email.utils import parsedate_to_datetime
@@ -44,6 +44,9 @@ class KnownPage:
     etag: str | None = None
     last_modified: str | None = None
     last_crawled_at: datetime | None = None
+    # Links found on the page last time. A 304 response has no body, so without these a crawl
+    # of an unchanged site could never discover anything beyond its first page.
+    links: tuple[str, ...] = ()
 
 
 @dataclass(frozen=True)
@@ -60,6 +63,8 @@ class PageFetched:
     depth: int
     render_mode: str  # "static" | "rendered"
     not_modified: bool = False
+    # Normalised in-policy links found on the page (persisted so 304 recrawls can follow them).
+    links: tuple[str, ...] = ()
 
 
 @dataclass(frozen=True)
@@ -105,6 +110,37 @@ class Crawler:
         self._renderer = renderer
         self._sleep = sleep
         self._clock = clock
+
+    def _enqueue_links(
+        self,
+        raw_links: Iterable[str],
+        depth: int,
+        start: str,
+        seen: set[str],
+        queue: deque[tuple[str, int, datetime | None]],
+        *,
+        follow: bool,
+    ) -> tuple[list[str], list[UrlSkipped]]:
+        """Normalise and filter links. Returns (all in-policy links, newly skipped links) and
+        queues unseen in-policy links when ``follow`` is set."""
+        extra = self._cfg.policy.extra_tracking
+        accepted: dict[str, None] = {}
+        skipped: list[UrlSkipped] = []
+        for raw in raw_links:
+            norm = normalize_url(raw, extra_tracking=extra)
+            if norm is None:
+                continue
+            reason = self._cfg.policy.check(norm, start)
+            if reason is None:
+                accepted[norm] = None
+            if not follow or norm in seen:
+                continue
+            seen.add(norm)
+            if reason:
+                skipped.append(UrlSkipped(norm, reason))
+            elif len(queue) < MAX_QUEUE:
+                queue.append((norm, depth + 1, None))
+        return list(accepted), skipped
 
     async def crawl(
         self, start_url: str, known: Mapping[str, KnownPage] | None = None
@@ -211,6 +247,14 @@ class Crawler:
             final = normalize_url(res.final_url, extra_tracking=cfg.policy.extra_tracking) or url
             seen.add(final)
             if res.not_modified:
+                accepted, link_skips = self._enqueue_links(
+                    prior.links if prior else (), depth, start, seen, queue,
+                    follow=depth < cfg.max_depth,
+                )  # fmt: skip
+                for link_skip in link_skips:
+                    ev = skip(link_skip.url, link_skip.reason)
+                    if ev:
+                        yield ev
                 yield PageFetched(
                     url=url, final_url=final, canonical_url=None, status=304, html=b"",
                     etag=res.etag or (prior.etag if prior else None),
@@ -218,6 +262,7 @@ class Crawler:
                     or (prior.last_modified if prior else None),
                     origin_last_modified=_parse_http_date(res.last_modified),
                     sitemap_lastmod=lastmod, depth=depth, render_mode="static", not_modified=True,
+                    links=tuple(accepted),
                 )  # fmt: skip
                 continue
             if res.status != 200:
@@ -255,19 +300,15 @@ class Crawler:
                 continue
             canonicals.add(identity)
 
-            if depth < cfg.max_depth and not links.nofollow:
-                for raw in links.links:
-                    norm = normalize_url(raw, extra_tracking=cfg.policy.extra_tracking)
-                    if norm is None or norm in seen:
-                        continue
-                    seen.add(norm)
-                    reason = cfg.policy.check(norm, start)
-                    if reason:
-                        ev = skip(norm, reason)
-                        if ev:
-                            yield ev
-                    elif len(queue) < MAX_QUEUE:
-                        queue.append((norm, depth + 1, None))
+            accepted, link_skips = self._enqueue_links(
+                [] if links.nofollow else links.links,
+                depth, start, seen, queue,
+                follow=depth < cfg.max_depth,
+            )  # fmt: skip
+            for link_skip in link_skips:
+                ev = skip(link_skip.url, link_skip.reason)
+                if ev:
+                    yield ev
 
             if links.noindex:
                 ev = skip(url, "noindex_meta")
@@ -280,4 +321,5 @@ class Crawler:
                 etag=res.etag, last_modified_header=res.last_modified,
                 origin_last_modified=_parse_http_date(res.last_modified),
                 sitemap_lastmod=lastmod, depth=depth, render_mode=render_mode,
+                links=tuple(accepted),
             )  # fmt: skip

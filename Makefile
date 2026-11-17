@@ -1,4 +1,4 @@
-.PHONY: install up down migrate api worker test lint format typecheck check
+.PHONY: install up down migrate api worker reindex test lint format typecheck check
 export PATH := $(HOME)/.local/bin:$(PATH)
 
 install:
@@ -16,6 +16,12 @@ migrate:
 
 api:
 	uv run uvicorn wta_api.main:create_app --factory --host 127.0.0.1 --port 8000 --reload
+
+worker:
+	uv run arq wta_indexing.worker.WorkerSettings
+
+reindex:
+	uv run python -m wta_indexing.reindex
 
 test:
 	uv run pytest

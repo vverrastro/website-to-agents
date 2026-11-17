@@ -225,3 +225,25 @@ async def test_internal_start_url_is_refused(make_fetcher) -> None:  # type: ign
         events = [e async for e in crawler.crawl("http://internal.test/")]
     assert pages(events) == []
     assert any(r.startswith("robots_blocked:") for r in skips(events).values())
+
+
+async def test_not_modified_pages_still_expose_and_follow_stored_links(make_fetcher) -> None:  # type: ignore[no-untyped-def]
+    base = site()
+
+    def handler(req: httpx.Request) -> httpx.Response:
+        if req.url.path == "/":
+            return httpx.Response(304, headers={"etag": '"v1"'})
+        return base(req)
+
+    known = {
+        "https://ok.test/": KnownPage(
+            etag='"v1"',
+            links=("https://ok.test/contact", "https://ok.test/cart", "https://other.test/"),
+        )
+    }
+    cfg = CrawlConfig(max_depth=1, use_sitemap=False, min_delay_seconds=0)
+    events, _ = await run(make_fetcher, cfg, handler=handler, known=known)
+    root = next(e for e in events if isinstance(e, PageFetched) and e.url == "https://ok.test/")
+    assert root.not_modified and root.links == ("https://ok.test/contact",)  # in-policy only
+    assert "https://ok.test/contact" in pages(events)  # discovered through the stored links
+    assert skips(events)["https://ok.test/cart"] == "excluded_path:/cart"
