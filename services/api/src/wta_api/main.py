@@ -96,7 +96,7 @@ def create_app(settings: Settings | None = None) -> FastAPI:
     )
     app.state.settings = settings
     app.state.alembic_ini = ALEMBIC_INI
-    install_middleware(app)
+    install_middleware(app, hsts=settings.is_production)
     register_error_handlers(app)
     app.include_router(health_router)
     app.include_router(public_router)

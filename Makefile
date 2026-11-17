@@ -1,4 +1,4 @@
-.PHONY: install up down migrate api worker reindex dashboard widget test lint format typecheck check build
+.PHONY: install up down migrate seed api worker reindex dashboard widget test lint format typecheck check build
 export PATH := $(HOME)/.local/bin:$(PATH)
 
 install:
@@ -13,6 +13,9 @@ down:
 
 migrate:
 	uv run alembic -c infrastructure/database/alembic.ini upgrade head
+
+seed:
+	uv run python -m wta_api.seed
 
 api:
 	uv run uvicorn wta_api.main:create_app --factory --host 127.0.0.1 --port 8000 --reload

@@ -18,7 +18,7 @@ SECURITY_HEADERS = {
 }
 
 
-def install_middleware(app: FastAPI) -> None:
+def install_middleware(app: FastAPI, *, hsts: bool = False) -> None:
     @app.middleware("http")
     async def _request_context(
         request: Request, call_next: Callable[[Request], Awaitable[Response]]
@@ -29,6 +29,8 @@ def install_middleware(app: FastAPI) -> None:
         structlog.contextvars.bind_contextvars(request_id=request_id, path=request.url.path)
         response = await call_next(request)
         response.headers["X-Request-ID"] = request_id
+        if hsts:  # production is HTTPS-only; local HTTP development must not pin HSTS
+            response.headers["Strict-Transport-Security"] = "max-age=31536000; includeSubDomains"
         for name, value in SECURITY_HEADERS.items():
             if name == "Content-Security-Policy" and request.url.path.startswith(_DOC_PATHS):
                 continue  # keep the (dev-only) Swagger UI working

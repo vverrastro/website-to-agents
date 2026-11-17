@@ -67,3 +67,14 @@ async def test_readyz_ok_against_local_stack() -> None:
         pytest.skip("local Postgres not running (make up)")
     assert r.status_code == 200, r.text
     assert r.json()["status"] == "ready"
+
+
+async def test_hsts_only_in_production() -> None:
+    for env, expected in (("production", True), ("development", False)):
+        app = create_app(settings(app_env=env))
+        async with await client_for(app) as c:
+            r = await c.get("/healthz")
+        assert ("strict-transport-security" in r.headers) is expected, env
+        if expected:
+            assert "max-age=" in r.headers["strict-transport-security"]
+        assert r.headers["x-content-type-options"] == "nosniff"
