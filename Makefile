@@ -11,6 +11,12 @@ up:
 down:
 	docker compose down
 
+migrate:
+	uv run alembic -c infrastructure/database/alembic.ini upgrade head
+
+api:
+	uv run uvicorn wta_api.main:create_app --factory --host 127.0.0.1 --port 8000 --reload
+
 test:
 	uv run pytest
 

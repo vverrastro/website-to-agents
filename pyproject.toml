@@ -44,8 +44,14 @@ python_version = "3.12"
 strict = true
 plugins = ["pydantic.mypy"]
 explicit_package_bases = true
+mypy_path = "services/common/src:services/crawler/src:services/indexing/src:services/agent-runtime/src:services/api/src"
 
 [tool.pytest.ini_options]
 asyncio_mode = "auto"
+asyncio_default_fixture_loop_scope = "function"
 testpaths = ["services"]
 markers = ["integration: needs Postgres/Redis from docker compose", "smoke: needs real API keys (RUN_SMOKE=1)"]
+
+[[tool.mypy.overrides]]
+module = ["pgvector.*", "arq.*", "trafilatura.*", "lxml.*", "alembic.*"]
+ignore_missing_imports = true
