@@ -1,5 +1,15 @@
 export * from "./schemas";
 
+import { z } from "zod";
+
+/**
+ * Call once in code that runs on third-party pages. Zod's JIT compiler uses `new Function`, which
+ * a strict host CSP forbids; jitless mode validates identically without dynamic code generation.
+ */
+export function configureForUntrustedHosts(): void {
+  z.config({ jitless: true });
+}
+
 import { ChatResponse, type ChatResponseT, ErrorResponse } from "./schemas";
 
 export type ParseResult<T> = { ok: true; value: T } | { ok: false; error: string };

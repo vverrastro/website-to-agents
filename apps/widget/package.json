@@ -1,0 +1,21 @@
+{
+  "name": "@wta/widget",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "Embeddable chat widget. Builds to a single dependency-free IIFE (dist/widget.js) rendered in a Shadow DOM.",
+  "scripts": {
+    "dev": "vite build && vite preview",
+    "build": "vite build",
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run"
+  },
+  "dependencies": {
+    "@wta/agent-protocol": "*",
+    "@wta/widget-sdk": "*"
+  },
+  "devDependencies": {
+    "@types/node": "^22",
+    "vite": "^8.3.8"
+  }
+}

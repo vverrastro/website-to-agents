@@ -1,0 +1,20 @@
+{
+  "name": "@wta/widget-sdk",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "Client for the public Website-to-Agents runtime API and the embed-snippet contract.",
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "scripts": {
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run"
+  },
+  "dependencies": {
+    "@wta/agent-protocol": "*"
+  },
+  "devDependencies": {
+    "@types/node": "^22"
+  }
+}

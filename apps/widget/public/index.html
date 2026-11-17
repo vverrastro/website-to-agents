@@ -1,0 +1,27 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Widget demo · Website-to-Agents</title>
+    <link rel="stylesheet" href="demo.css" />
+  </head>
+  <body>
+    <main>
+      <h1>Widget demo page</h1>
+      <p>
+        Stands in for a customer website. Enter a <strong>published</strong> agent's public id (from the dashboard's
+        Embed tab) and the widget loads exactly as it would from the embed snippet.
+      </p>
+      <form id="load">
+        <label>Public agent id <input id="agent" placeholder="pub_…" autocomplete="off" /></label>
+        <label>API base URL <input id="api" value="http://127.0.0.1:8000" autocomplete="off" /></label>
+        <button type="submit">Load widget</button>
+      </form>
+      <p id="msg" role="status"></p>
+      <h2>Embed snippet</h2>
+      <pre id="snippet"></pre>
+    </main>
+    <script src="demo.js"></script>
+  </body>
+</html>
