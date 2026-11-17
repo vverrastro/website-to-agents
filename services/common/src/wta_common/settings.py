@@ -44,6 +44,13 @@ class Settings(BaseSettings):
     public_rate_limit_per_minute: int = 20
     public_max_concurrent_requests: int = 8
     conversation_retention_days: int = 30
+    public_daily_quota_per_agent: int = 2000
+    public_request_timeout_seconds: float = 45.0
+    # Number of trusted reverse proxies in front of the API (0 = use the socket peer address).
+    trusted_proxy_hops: int = 0
+    retrieval_top_k: int = 6
+    retrieval_context_chars: int = 8000
+    history_turns: int = 6
 
     crawler_user_agent: str = "WebsiteToAgentsBot/0.1"
     crawler_rendering_enabled: bool = False

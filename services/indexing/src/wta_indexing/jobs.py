@@ -12,6 +12,7 @@ from sqlalchemy.ext.asyncio import AsyncSession, async_sessionmaker
 from wta_common.crawl_config import AgentCrawlConfig
 from wta_common.logging import get_logger
 from wta_common.models import Agent, CrawlRun, Source
+from wta_common.retention import purge_expired_conversations
 from wta_common.settings import ConfigError, Settings
 from wta_crawler import Fetcher
 from wta_crawler.render import PlaywrightRenderer
@@ -124,3 +125,13 @@ async def schedule_recrawls(ctx: dict[str, Any]) -> int:
         await enqueue_crawl(pool, run_id)
     log.info("recrawls_scheduled", count=len(enqueued))
     return len(enqueued)
+
+
+async def purge_conversations(ctx: dict[str, Any]) -> int:
+    """Cron: delete conversations older than CONVERSATION_RETENTION_DAYS."""
+    settings: Settings = ctx["settings"]
+    removed = await purge_expired_conversations(
+        ctx["session_factory"], settings.conversation_retention_days
+    )
+    log.info("conversations_purged", count=removed)
+    return removed

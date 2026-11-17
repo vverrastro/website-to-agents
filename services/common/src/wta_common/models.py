@@ -238,3 +238,33 @@ class ChunkEmbedding(Base):
         ),
         Index("ix_chunk_embeddings_agent_space", "agent_id", "embedding_space_id"),
     )
+
+
+class Conversation(Base):
+    """A widget/preview conversation. Stores no IP address or other client identifiers."""
+
+    __tablename__ = "conversations"
+    id: Mapped[uuid.UUID] = _uuid_pk()
+    workspace_id: Mapped[uuid.UUID] = _ws_fk()
+    agent_id: Mapped[uuid.UUID] = _agent_fk()
+    created_at: Mapped[datetime] = _created()
+    last_activity_at: Mapped[datetime] = mapped_column(
+        DateTime(timezone=True), server_default=func.now(), nullable=False
+    )
+    __table_args__ = (Index("ix_conversations_activity", "last_activity_at"),)
+
+
+class ChatMessage(Base):
+    __tablename__ = "chat_messages"
+    id: Mapped[uuid.UUID] = _uuid_pk()
+    workspace_id: Mapped[uuid.UUID] = _ws_fk()
+    agent_id: Mapped[uuid.UUID] = _agent_fk()
+    conversation_id: Mapped[uuid.UUID] = mapped_column(
+        UUID(as_uuid=True), ForeignKey("conversations.id", ondelete="CASCADE"), nullable=False
+    )
+    role: Mapped[str] = mapped_column(String(10), nullable=False)
+    content: Mapped[str] = mapped_column(Text, nullable=False)
+    sources: Mapped[list[dict[str, Any]]] = mapped_column(JSONB, nullable=False, default=list)
+    usage: Mapped[dict[str, Any] | None] = mapped_column(JSONB)
+    created_at: Mapped[datetime] = _created()
+    __table_args__ = (Index("ix_chat_messages_conv", "conversation_id", "created_at"),)

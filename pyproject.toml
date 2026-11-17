@@ -36,6 +36,9 @@ extend-exclude = ["infrastructure/database/versions"]
 select = ["E", "F", "I", "B", "UP", "S", "ASYNC", "SIM"]
 ignore = ["S101"]
 
+[tool.ruff.lint.flake8-bugbear]
+extend-immutable-calls = ["fastapi.Depends", "fastapi.Query"]
+
 [tool.ruff.lint.per-file-ignores]
 "**/tests/**" = ["S", "E501"]
 

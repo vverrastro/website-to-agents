@@ -10,7 +10,7 @@ from wta_common.db import make_engine, make_session_factory
 from wta_common.logging import configure_logging
 from wta_common.settings import get_settings
 
-from wta_indexing.jobs import crawl_site, schedule_recrawls
+from wta_indexing.jobs import crawl_site, purge_conversations, schedule_recrawls
 
 
 async def startup(ctx: dict[str, Any]) -> None:
@@ -26,7 +26,10 @@ async def shutdown(ctx: dict[str, Any]) -> None:
 
 class WorkerSettings:
     functions = [crawl_site]
-    cron_jobs = [cron(schedule_recrawls, minute={0, 30}, run_at_startup=False)]
+    cron_jobs = [
+        cron(schedule_recrawls, minute={0, 30}, run_at_startup=False),
+        cron(purge_conversations, hour={3}, minute={15}, run_at_startup=False),
+    ]
     redis_settings = RedisSettings.from_dsn(get_settings().redis_url)
     on_startup = startup
     on_shutdown = shutdown
