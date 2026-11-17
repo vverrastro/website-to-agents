@@ -1,0 +1,21 @@
+[project]
+name = "wta-api"
+version = "0.1.0"
+description = "FastAPI application"
+requires-python = ">=3.12"
+dependencies = [
+  "wta-common",
+  "wta-crawler",
+  "wta-indexing",
+  "wta-agent-runtime",
+  "fastapi>=0.115",
+  "uvicorn[standard]>=0.32",
+  "redis>=5.2",
+]
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/wta_api"]

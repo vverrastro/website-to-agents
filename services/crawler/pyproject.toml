@@ -1,0 +1,17 @@
+[project]
+name = "wta-crawler"
+version = "0.1.0"
+description = "Deterministic discovery, SSRF-safe fetching"
+requires-python = ">=3.12"
+dependencies = [
+  "wta-common",
+  "httpx>=0.27",
+  "lxml>=5.3",
+]
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/wta_crawler"]

@@ -1,0 +1,21 @@
+[project]
+name = "wta-common"
+version = "0.1.0"
+description = "Settings, DB models, logging, protocol models"
+requires-python = ">=3.12"
+dependencies = [
+  "pydantic>=2.9",
+  "pydantic-settings>=2.6",
+  "sqlalchemy[asyncio]>=2.0",
+  "asyncpg>=0.30",
+  "pgvector>=0.3",
+  "alembic>=1.14",
+  "structlog>=24.4",
+]
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/wta_common"]

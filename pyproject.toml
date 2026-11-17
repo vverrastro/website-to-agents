@@ -1,0 +1,51 @@
+[project]
+name = "website-to-agents"
+version = "0.1.0"
+description = "Turn a public website into a RAG-powered AI agent"
+requires-python = ">=3.12"
+dependencies = []
+
+[tool.uv]
+package = false
+
+[tool.uv.workspace]
+members = ["services/*"]
+
+[tool.uv.sources]
+wta-common = { workspace = true }
+wta-crawler = { workspace = true }
+wta-indexing = { workspace = true }
+wta-agent-runtime = { workspace = true }
+wta-api = { workspace = true }
+
+[dependency-groups]
+dev = [
+  "pytest>=8",
+  "pytest-asyncio>=0.24",
+  "respx>=0.21",
+  "ruff>=0.8",
+  "mypy>=1.13",
+]
+
+[tool.ruff]
+line-length = 100
+target-version = "py312"
+extend-exclude = ["infrastructure/database/versions"]
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "B", "UP", "S", "ASYNC", "SIM"]
+ignore = ["S101"]
+
+[tool.ruff.lint.per-file-ignores]
+"**/tests/**" = ["S"]
+
+[tool.mypy]
+python_version = "3.12"
+strict = true
+plugins = ["pydantic.mypy"]
+explicit_package_bases = true
+
+[tool.pytest.ini_options]
+asyncio_mode = "auto"
+testpaths = ["services"]
+markers = ["integration: needs Postgres/Redis from docker compose", "smoke: needs real API keys (RUN_SMOKE=1)"]

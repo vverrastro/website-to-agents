@@ -1,0 +1,69 @@
+# Environment & secrets (keep only safe examples)
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+secrets/
+.secrets/
+
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.venv/
+venv/
+.python-version
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.coverage
+.coverage.*
+htmlcov/
+coverage.xml
+.hypothesis/
+dist/
+build/
+
+# Node / Next.js / Vite
+node_modules/
+.next/
+out/
+.turbo/
+*.tsbuildinfo
+coverage/
+.vite/
+apps/widget/dist/
+packages/*/dist/
+
+# Logs & temp
+*.log
+logs/
+tmp/
+*.tmp
+
+# Local data & volumes
+.data/
+data/
+pgdata/
+redisdata/
+crawl-data/
+*.sqlite
+*.sqlite3
+*.db
+
+# Playwright / browsers
+playwright-report/
+test-results/
+.playwright/
+ms-playwright/
+
+# IDE & OS
+.idea/
+.vscode/
+*.swp
+.DS_Store
+Thumbs.db
+
+# Claude Code local files
+.claude/settings.local.json
