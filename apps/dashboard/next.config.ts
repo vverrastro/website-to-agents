@@ -21,6 +21,8 @@ const csp = [
 const config: NextConfig = {
   transpilePackages: ["@wta/agent-protocol"],
   poweredByHeader: false,
+  // Next 16 dev otherwise writes an AGENTS.md into the repo.
+  agentRules: false,
   async rewrites() {
     return [{ source: "/api/admin/:path*", destination: `${apiInternal}/admin/v1/:path*` }];
   },
